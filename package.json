@@ -1,0 +1,23 @@
+{
+    "name": "test-factory",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "packageManager": "pnpm@10.18.3",
+    "devDependencies": {
+        "prettier": "^3.6.2",
+        "sass": "^1.94.2",
+        "typescript": "^5.9.3",
+        "vite": "^7.2.4"
+    }
+}
