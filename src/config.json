@@ -1,0 +1,27 @@
+{
+    "vehicleConfiguration": {
+        "Car": {
+            "wheel": 4,
+            "engine": 1
+        },
+        "Plane": {
+            "wing": 2,
+            "engine": 1,
+            "wheel": 3
+        }
+    },
+    "storeConfiguration": {
+        "wheel": {
+            "count": 1000,
+            "price": 2
+        },
+        "engine": {
+            "count": 100,
+            "price": 15
+        },
+        "wing": {
+            "count": 200,
+            "price": 10
+        }
+    }
+}

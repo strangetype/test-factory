@@ -1,13 +1,22 @@
+/**
+ * Компонент станции ремонта техники
+ * Отображает кнопки проверки и ремонта, анимации сканирования и ремонта, сообщения о статусе
+ */
+
 import { createViewComponent } from "../../common/createViewComponent";
 import repairStationHTML from "./RepairStation.html?raw";
 import "./RepairStation.scss";
 
 export type MessageType = "success" | "warning" | "danger";
 
+/**
+ * View-компонент станции ремонта
+ * Независим от бизнес-логики, работает только с отображением и пользовательским вводом
+ */
 export const RepairStation = createViewComponent(
     repairStationHTML,
 
-    //getContext
+    // Инициализация контекста компонента
     () =>
         ({
             checkButton: null,
@@ -17,8 +26,8 @@ export const RepairStation = createViewComponent(
             messageContainer: null,
             checkCallback: () => null,
             repairCallback: () => null,
-            checkDisabledByUser: false,
-            repairDisabledByUser: false,
+            checkDisabledByUser: false, // Флаг блокировки кнопки Check пользователем
+            repairDisabledByUser: false, // Флаг блокировки кнопки Repair пользователем
         }) as {
             checkButton: HTMLButtonElement | null;
             repairButton: HTMLButtonElement | null;
@@ -31,16 +40,19 @@ export const RepairStation = createViewComponent(
             repairDisabledByUser: boolean;
         },
 
-    //properties
+    // Публичный API компонента
     {
+        // Устанавливает callback для события завершения проверки
         setCheckCallback: (_element, context, callback: () => void) => {
             context.checkCallback = callback;
         },
 
+        // Устанавливает callback для события завершения ремонта
         setRepairCallback: (_element, context, callback: () => void) => {
             context.repairCallback = callback;
         },
 
+        // Запускает анимацию проверки техники
         performCheck: (_element, context) => {
             // Блокируем кнопки во время проверки
             context.checkButton!.disabled = true;
@@ -68,6 +80,7 @@ export const RepairStation = createViewComponent(
             }, 2000); // 2 секунды - длительность анимации
         },
 
+        // Запускает анимацию ремонта техники
         performRepair: (_element, context) => {
             // Блокируем кнопки во время ремонта
             context.checkButton!.disabled = true;
@@ -95,6 +108,7 @@ export const RepairStation = createViewComponent(
             }, 2000); // 2 секунды - длительность анимации
         },
 
+        // Блокирует обе кнопки (Check и Repair)
         disable: (_element, context) => {
             context.checkDisabledByUser = true;
             context.repairDisabledByUser = true;
@@ -102,6 +116,7 @@ export const RepairStation = createViewComponent(
             context.repairButton!.disabled = true;
         },
 
+        // Разблокирует обе кнопки (Check и Repair)
         enable: (_element, context) => {
             context.checkDisabledByUser = false;
             context.repairDisabledByUser = false;
@@ -109,26 +124,31 @@ export const RepairStation = createViewComponent(
             context.repairButton!.disabled = false;
         },
 
+        // Блокирует только кнопку Check
         disableCheck: (_element, context) => {
             context.checkDisabledByUser = true;
             context.checkButton!.disabled = true;
         },
 
+        // Разблокирует кнопку Check
         enableCheck: (_element, context) => {
             context.checkDisabledByUser = false;
             context.checkButton!.disabled = false;
         },
 
+        // Блокирует только кнопку Repair
         disableRepair: (_element, context) => {
             context.repairDisabledByUser = true;
             context.repairButton!.disabled = true;
         },
 
+        // Разблокирует кнопку Repair
         enableRepair: (_element, context) => {
             context.repairDisabledByUser = false;
             context.repairButton!.disabled = false;
         },
 
+        // Показывает сообщение пользователю
         showMessage: (
             _element,
             context,
@@ -149,6 +169,7 @@ export const RepairStation = createViewComponent(
             context.messageContainer!.classList.add("visible");
         },
 
+        // Скрывает сообщение с анимацией
         hideMessage: (_element, context) => {
             // Запускаем fadeout анимацию
             context.messageContainer!.classList.add("fadeout");
@@ -161,6 +182,7 @@ export const RepairStation = createViewComponent(
             }, 300); // Длительность fadeout анимации
         },
 
+        // Устанавливает обработчик клика на кнопку Check
         setCheckClick: (
             element: HTMLElement,
             _context,
@@ -172,6 +194,7 @@ export const RepairStation = createViewComponent(
             }
         },
 
+        // Устанавливает обработчик клика на кнопку Repair
         setRepairClick: (
             element: HTMLElement,
             _context,
@@ -184,7 +207,7 @@ export const RepairStation = createViewComponent(
         },
     },
 
-    //onMount
+    // Callback при монтировании компонента
     (element, context) => {
         context.checkButton = element.querySelector(
             "#check-button"
